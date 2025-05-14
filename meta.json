@@ -2,7 +2,7 @@
   "$schema": "https://dl.viam.dev/module.schema.json",
   "module_id": "joyce:control-lamp-alarm",
   "visibility": "private",
-  "url": "",
+  "url": "https://github.com/loopDelicious/control-module-example",
   "description": "Modular generic service: lamp-alarm",
   "models": [
     {
@@ -14,12 +14,12 @@
   ],
   "applications": null,
   "markdown_link": "README.md",
-  "entrypoint": "reload.sh",
+  "entrypoint": "dist/main",
   "first_run": "",
   "build": {
-    "build": "rm -f module.tar.gz && tar czf module.tar.gz requirements.txt src/*.py src/models/*.py meta.json setup.sh reload.sh",
+    "build": "./build.sh",
     "setup": "./setup.sh",
-    "path": "module.tar.gz",
+    "path": "dist/archive.tar.gz",
     "arch": [
       "linux/amd64",
       "linux/arm64"

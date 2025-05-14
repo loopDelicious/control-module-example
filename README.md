@@ -1,18 +1,20 @@
-# Module control-lamp-alarm 
+# Module control-lamp-alarm
 
-Provide a description of the purpose of the module and any relevant information.
+This module provides the control logic for turning on and off a smart plug connected to a lamp based on computer vision detections.
 
 ## Model joyce:control-lamp-alarm:lamp-alarm
 
-Provide a description of the model and any relevant information.
+Turn on the lights when a person is detected. Turn off the lights 3 minutes after no person is detected.
 
 ### Configuration
+
 The following attribute template can be used to configure this model:
 
 ```json
 {
-"attribute_1": <float>,
-"attribute_2": <string>
+  "generic": <string>,
+  "camera": <string>,
+  "vision": <string>
 }
 ```
 
@@ -20,31 +22,36 @@ The following attribute template can be used to configure this model:
 
 The following attributes are available for this model:
 
-| Name          | Type   | Inclusion | Description                |
-|---------------|--------|-----------|----------------------------|
-| `attribute_1` | float  | Required  | Description of attribute 1 |
-| `attribute_2` | string | Optional  | Description of attribute 2 |
+| Name      | Type   | Inclusion | Description                                           |
+| --------- | ------ | --------- | ----------------------------------------------------- |
+| `generic` | string | Required  | Name of the Kasa smart plug component in the Viam app |
+| `camera`  | string | Required  | Name of the webcam component in the Viam app          |
+| `vision`  | string | Required  | Name of the vision service in the Viam app            |
 
 #### Example Configuration
 
 ```json
 {
-  "attribute_1": 1.0,
-  "attribute_2": "foo"
+  "generic": "smart-plug",
+  "camera": "camera-1",
+  "vision": "vision-people-detector"
 }
 ```
 
 ### DoCommand
 
-If your model implements DoCommand, provide an example payload of each command that is supported and the arguments that can be used. If your model does not implement DoCommand, remove this section.
-
-#### Example DoCommand
+This step is only required during development and testing, not in production. To start your control logic, copy and paste the following command input, and click **Execute**:
 
 ```json
 {
-  "command_name": {
-    "arg1": "foo",
-    "arg2": 1
-  }
+  "action": "start"
+}
+```
+
+To stop your control logic, use the following command input:
+
+```json
+{
+  "action": "stop"
 }
 ```

@@ -124,7 +124,7 @@ class LampAlarm(Generic, EasyResource):
             now = asyncio.get_event_loop().time()
             if has_person:
                 LOGGER.info("Confident person detected. Turning on lamp.")
-                await self.lamp.do_command({"on": True})
+                await self.lamp.do_command({"toggle_on": []})
                 self.last_seen = now
             else:
                 if not hasattr(self, "last_seen"):
@@ -132,7 +132,7 @@ class LampAlarm(Generic, EasyResource):
                 elapsed = now - self.last_seen
                 if elapsed > 180:
                     LOGGER.info("No person confidently detected for 3 minutes. Turning off lamp.")
-                    await self.lamp.do_command({"on": False})
+                    await self.lamp.do_command({"toggle_off": []})
 
         except Exception as err:
             LOGGER.error(f"Error in control logic: {err}")
