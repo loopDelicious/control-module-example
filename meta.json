@@ -1,7 +1,7 @@
 {
   "$schema": "https://dl.viam.dev/module.schema.json",
   "module_id": "joyce:control-lamp-alarm",
-  "visibility": "private",
+  "visibility": "public",
   "url": "https://github.com/loopDelicious/control-module-example",
   "description": "Modular generic service: lamp-alarm",
   "models": [
