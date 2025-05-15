@@ -90,7 +90,7 @@ class LampAlarm(Generic, EasyResource):
         if self.running is None:
             self.start()
         else:
-            LOGGER.info("Already running control logic.")
+            self.logger.info("Already running control logic.")
 
         return super().reconfigure(config, dependencies)
 
@@ -111,10 +111,10 @@ class LampAlarm(Generic, EasyResource):
 
     async def on_loop(self):
         try:
-            LOGGER.info("Executing control logic")
+            self.logger.info("Executing control logic")
 
             detections = await self.vision.get_detections_from_camera(self.camera_name)
-            LOGGER.info(f"Raw Detections: {detections}")
+            self.logger.info(f"Raw Detections: {detections}")
 
             has_person = any(
                 d.class_name.lower() == "person" and d.confidence > 0.7
@@ -123,7 +123,7 @@ class LampAlarm(Generic, EasyResource):
 
             now = asyncio.get_event_loop().time()
             if has_person:
-                LOGGER.info("Confident person detected. Turning on lamp.")
+                self.logger.info("Confident person detected. Turning on lamp.")
                 await self.lamp.do_command({"toggle_on": []})
                 self.last_seen = now
             else:
@@ -131,11 +131,11 @@ class LampAlarm(Generic, EasyResource):
                     self.last_seen = now
                 elapsed = now - self.last_seen
                 if elapsed > 180:
-                    LOGGER.info("No person confidently detected for 3 minutes. Turning off lamp.")
+                    self.logger.info("No person confidently detected for 3 minutes. Turning off lamp.")
                     await self.lamp.do_command({"toggle_off": []})
 
         except Exception as err:
-            LOGGER.error(f"Error in control logic: {err}")
+            self.logger.error(f"Error in control logic: {err}")
         await asyncio.sleep(10)
 
     def __del__(self):
